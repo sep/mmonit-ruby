@@ -43,6 +43,10 @@ module MMonit
 			self.request('/z_security_check', URI.encode_www_form({'z_username'=>@username, 'z_password'=>@password, 'z_csrf_protection'=>'off'}), true).code.to_i == 302
 		end
 
+		def logout
+			self.request('/login/logout.csp')
+		end
+
 		# Status API: http://mmonit.com/documentation/http-api/Methods/Status
 		def status
 			JSON.parse(self.request('/status/hosts/list').body)['records']
