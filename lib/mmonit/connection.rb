@@ -10,7 +10,7 @@ module MMonit
 		def initialize(options = {})
 			@ssl = options[:ssl] || false
 			@address = options[:address]
-			options[:port] ||= @ssl ? '8443' : '8080'
+			options[:port] ||= @ssl ? 8443 : 8080
 			@port = options[:port]
 			@username = options[:username]
 			@password = options[:password]
