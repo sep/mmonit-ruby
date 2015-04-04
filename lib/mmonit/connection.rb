@@ -40,7 +40,7 @@ module MMonit
 		end
 
 		def login
-			self.request('/z_security_check', "z_username=#{@username}&z_password=#{@password}", true).code.to_i == 302
+			self.request('/z_security_check', URI.encode_www_form({'z_username'=>@username, 'z_password'=>@password, 'z_csrf_protection'=>'off'}), true).code.to_i == 302
 		end
 
 		# Status API: http://mmonit.com/documentation/http-api/Methods/Status
