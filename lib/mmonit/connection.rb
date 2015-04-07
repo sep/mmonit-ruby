@@ -23,7 +23,8 @@ module MMonit
 				'Referer' => "#{@url}/index.csp",
 				'Content-Type' => 'application/x-www-form-urlencoded',
 				'User-Agent' => @useragent,
-				'Connection' => 'Keep-Alive'
+				'Connection' => 'Keep-Alive',
+				'Accept-Encoding' => 'identity'
 			}
 		end
 
