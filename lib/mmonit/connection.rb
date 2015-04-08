@@ -37,7 +37,15 @@ module MMonit
 			end
 
 			@headers['Cookie'] = @http.get('/index.csp').response['set-cookie'].split(';').first
-			self.login
+			login
+		end
+
+		def disconnect
+			return unless @http.is_a?(Net::HTTP)
+
+			logout
+			@http = nil
+			@headers['Cookie'] = nil;
 		end
 
 		def login
@@ -47,6 +55,8 @@ module MMonit
 		def logout
 			self.request('/login/logout.csp')
 		end
+
+		private :logout
 
 		# Status API: http://mmonit.com/documentation/http-api/Methods/Status
 		def status
