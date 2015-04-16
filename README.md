@@ -7,6 +7,7 @@ A subset of the [M/Monit HTTP API](http://mmonit.com/documentation/http-api/) co
 ## Available Commands
 
 * `connect` - Connect to M/Monit and establish a session
+* `disconnect` - Close the HTTP session
 * `status` - Status overview
 * `status_detailed(id_or_fqdn)` - Detailed status for a specified host
   * `id_or_fqdn` - Either the numeric id or the fully-qualified domain name for a host
