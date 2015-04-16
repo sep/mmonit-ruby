@@ -10,7 +10,7 @@ module MMonit
 		def initialize(options = {})
 			@ssl = options[:ssl] || false
 			@address = options[:address]
-			options[:port] ||= @ssl ? '8443' : '8080'
+			options[:port] ||= @ssl ? 8443 : 8080
 			@port = options[:port]
 			@username = options[:username]
 			@password = options[:password]
@@ -23,7 +23,8 @@ module MMonit
 				'Referer' => "#{@url}/index.csp",
 				'Content-Type' => 'application/x-www-form-urlencoded',
 				'User-Agent' => @useragent,
-				'Connection' => 'Keep-Alive'
+				'Connection' => 'Keep-Alive',
+				'Accept-Encoding' => 'identity'
 			}
 		end
 
@@ -36,12 +37,26 @@ module MMonit
 			end
 
 			@headers['Cookie'] = @http.get('/index.csp').response['set-cookie'].split(';').first
-			self.login
+			login
+		end
+
+		def disconnect
+			return unless @http.is_a?(Net::HTTP)
+
+			logout
+			@http = nil
+			@headers['Cookie'] = nil;
 		end
 
 		def login
-			self.request('/z_security_check', "z_username=#{@username}&z_password=#{@password}", true).code.to_i == 302
+			self.request('/z_security_check', URI.encode_www_form({'z_username'=>@username, 'z_password'=>@password, 'z_csrf_protection'=>'off'}), true).code.to_i == 302
 		end
+
+		def logout
+			self.request('/login/logout.csp')
+		end
+
+		private :logout
 
 		# Status API: http://mmonit.com/documentation/http-api/Methods/Status
 		def status

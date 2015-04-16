@@ -30,7 +30,7 @@ A subset of the [M/Monit HTTP API](http://mmonit.com/documentation/http-api/) co
             :username => 'USERNAME',
             :password => 'PASSWORD',
             :address => 'example.com',
-            :port => '443'
+            :port => 443
     })
 
     mmonit.connect
